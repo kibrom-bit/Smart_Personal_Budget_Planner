@@ -1,0 +1,22 @@
+# Build directories
+/build/
+/out/
+/target/
+
+# IDE files
+/nbproject/private/
+*.nb-configuration.xml
+
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Temporary files
+*~
+*.tmp
+
+# User-specific files
+.DS_Store
+Thumbs.db
