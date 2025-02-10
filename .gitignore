@@ -1,8 +1,15 @@
 # Build directories
+<<<<<<< HEAD
 /build/
 /out/
 /target/
 
+=======
+Implementation/Smart Personal Budget Planner Implementation/build/
+/out/
+/target/
+Implementation/Smart Personal Budget Planner Implementation/lib/
+>>>>>>> de89e4fb211eca74c84b250bd983d0e8fa0e5e3d
 # IDE files
 /nbproject/private/
 *.nb-configuration.xml
