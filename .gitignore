@@ -1,10 +1,12 @@
 # Build directories
+
 /build/
 /out/
 /target/
 
 # IDE files
 /nbproject/
+/lib/
 *.nb-configuration.xml
 
 # Compiled class files
