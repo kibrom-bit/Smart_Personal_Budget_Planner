@@ -10,7 +10,7 @@ This project employed a Model-Driven Development (MDD) approach using Eclipse. T
     ![Class Diagram](MDD/class diagram/class_diagram.png) *(Replace with actual path)*
 
     *Example Sequence Diagram:*
-    ![Sequence Diagram](MDD/sequence_diagram/sequence_diagram.png) *(Replace with actual path)*
+    ![Sequence Diagram](MDD/sequence diagram/sequence_diagram.png) *(Replace with actual path)*
 
 2. **Java Code Generation (Eclipse):**  Eclipse's code generation capabilities were used to create initial Java class skeletons directly from the UML Class diagram. The following Java classes were generated (based on the system features):
 
