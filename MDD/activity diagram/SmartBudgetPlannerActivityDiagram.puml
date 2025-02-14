@@ -1,0 +1,17 @@
+@startuml
+start
+: Get expense amount;
+: Get category;
+: Get date;
+: Parse date;
+: Validate input;
+if (input valid) then
+    : Create expense data;
+    : Save expense to file;
+    : Calculate total expenses;
+    : Display success message;
+else
+    : Display error message;
+endif
+stop
+@enduml

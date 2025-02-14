@@ -1,0 +1,25 @@
+@startuml
+usecase "Login"
+usecase "Create Account"
+usecase "Set Budget"
+usecase "Add Expense"
+usecase "Edit Expense"
+usecase "View Expenses"
+usecase "View Budget"
+usecase "Manage Savings"
+
+actor User
+
+User --|> "Login"
+User --|> "Create Account"
+
+"Login" ..> "Set Budget"
+"Login" ..> "Add Expense"
+"Login" ..> "Edit Expense"
+"Login" ..> "View Expenses"
+"Login" ..> "View Budget"
+"Login" ..> "Manage Savings"
+
+"Set Budget" --|> "Manage Budget"
+
+@enduml

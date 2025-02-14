@@ -4,7 +4,7 @@
 /target/
 
 # IDE files
-/nbproject/private/
+/nbproject/
 *.nb-configuration.xml
 
 # Compiled class files
