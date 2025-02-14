@@ -1,11 +1,10 @@
 package spbpp;
 
-import java.io.BufferedReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +21,6 @@ public class SavingsManagerTest {
     @Before
     public void setUp() {
         savingsManager = new SavingsManager();
-        // Clean up any existing test files before each test
         try {
             Files.deleteIfExists(Paths.get(testFile));
         } catch (IOException e) {
@@ -32,7 +30,6 @@ public class SavingsManagerTest {
 
     @After
     public void tearDown() {
-        // Clean up test files after each test
         try {
             Files.deleteIfExists(Paths.get(testFile));
         } catch (IOException e) {
@@ -42,7 +39,6 @@ public class SavingsManagerTest {
 
     @Test
     public void testLoadSavingsGoal_FileExists() throws IOException {
-        // Create a test file with a known goal
         double expectedGoal = 500.0;
         Files.write(Paths.get(testFile), String.valueOf(expectedGoal).getBytes());
 
@@ -75,19 +71,9 @@ public class SavingsManagerTest {
     public void testSetSavingsGoal() throws IOException {
         double goal = 1000.0;
         savingsManager.setSavingsGoal(testYear, testMonth, goal);
-        // Check if the file was created and contains the correct goal
         try (BufferedReader reader = new BufferedReader(new FileReader(testFile))) {
             double fileGoal = Double.parseDouble(reader.readLine());
             assertEquals(goal, fileGoal, 0.0);
         }
     }
-
-}, goal);
-        // Check if the file was created and contains the correct goal
-        try (BufferedReader reader = new BufferedReader(new FileReader(testFile))) {
-            double fileGoal = Double.parseDouble(reader.readLine());
-            assertEquals(goal, fileGoal, 0.0);
-        }
-    }
-
 }
