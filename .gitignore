@@ -6,15 +6,14 @@
 /dist/
 # IDE files
 /nbproject/
-/lib/
 *.nb-configuration.xml
-
+/lib/
 # Compiled class files
 *.class
 
 # Log files
 *.log
-
+*.txt
 # Temporary files
 *~
 *.tmp
