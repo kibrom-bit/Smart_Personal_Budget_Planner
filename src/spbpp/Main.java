@@ -247,9 +247,6 @@ public class Main {
             scanner.nextLine();
         }
     }
-
-    // Remaining helper methods (addExpense, editExpense, viewExpenses, etc.)
-    // ... [Previous implementation remains mostly unchanged] ...
     
     private static String getMonthName(String month) {
         return switch (month) {

@@ -2,18 +2,18 @@
 <project name="SPBPP" default="run" basedir=".">
     <description>Builds, tests, and runs the project SPBPP.</description>
 
-    <!-- Define properties for source, build, and library directories -->
     <property name="src.dir" value="src"/>
     <property name="test.dir" value="test"/>
     <property name="build.dir" value="build"/>
     <property name="lib.dir" value="lib"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="main.class" value="spbpp.Main"/>
 
-    <!-- Clean target to delete the build directory -->
     <target name="clean">
         <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
     </target>
 
-    <!-- Compile target to compile main Java source files -->
     <target name="compile">
         <mkdir dir="${build.dir}"/>
         <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
@@ -25,7 +25,6 @@
         </javac>
     </target>
 
-    <!-- Compile test sources after compiling main sources -->
     <target name="compile-tests" depends="compile">
         <javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false">
             <classpath>
@@ -37,9 +36,8 @@
         </javac>
     </target>
 
-    <!-- Run target to execute the main class -->
     <target name="run" depends="compile">
-        <java classname="spbpp.Main" fork="true">
+        <java classname="${main.class}" fork="true">
             <classpath>
                 <pathelement path="${build.dir}"/>
                 <fileset dir="${lib.dir}">
@@ -48,23 +46,36 @@
             </classpath>
         </java>
     </target>
-<target name="test" depends="compile">
-    <junit printsummary="on" haltonfailure="true" fork="true" showoutput="true">
-        <classpath>
-            <pathelement path="${build.dir}"/> <!-- Include compiled classes -->
-            <pathelement path="${lib.dir}/junit-4.13.2.jar"/> <!-- Explicitly include JUnit -->
-            <pathelement path="${lib.dir}/hamcrest-core-1.3.jar"/> <!-- Include Hamcrest if needed -->
-            <pathelement path="${lib.dir}/*"/> <!-- Include all other JARs in the lib directory -->
-        </classpath>
-        <formatter type="plain"/>
-        <formatter type="xml"/>
-        <batchtest>
-            <fileset dir="${test.dir}">
-                <include name="**/*Test.class"/> <!-- Adjust this pattern as needed -->
-            </fileset>
-        </batchtest>
-    </junit>
-</target>
-    <!-- Default target to run the project -->
+
+    <target name="test" depends="compile-tests">
+        <junit printsummary="on" haltonfailure="true" fork="true" showoutput="true">
+            <classpath>
+                <pathelement path="${build.dir}"/>
+                <pathelement path="${lib.dir}/junit-4.13.2.jar"/>
+                <pathelement path="${lib.dir}/hamcrest-core-1.3.jar"/>
+                <fileset dir="${lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <formatter type="plain"/>
+            <formatter type="xml"/>
+            <batchtest>
+                <fileset dir="${test.dir}">
+                    <include name="**/*Test.class"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="package" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+            <fileset dir="${lib.dir}"/>
+        </jar>
+    </target>
+
     <target name="default" depends="run"/>
 </project>

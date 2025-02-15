@@ -3,7 +3,7 @@
 /build/
 /out/
 /target/
-
+/dist/
 # IDE files
 /nbproject/
 /lib/
@@ -22,3 +22,4 @@
 # User-specific files
 .DS_Store
 Thumbs.db
+/dist/

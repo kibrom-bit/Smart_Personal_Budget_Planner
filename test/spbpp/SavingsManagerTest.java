@@ -24,7 +24,7 @@ public class SavingsManagerTest {
         try {
             Files.deleteIfExists(Paths.get(testFile));
         } catch (IOException e) {
-            // Ignore if the file doesn't exist
+
         }
     }
 
