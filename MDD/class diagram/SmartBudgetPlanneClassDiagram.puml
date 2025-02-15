@@ -1,71 +1,91 @@
 @startuml
-title Personal Budget Planner System - Class Diagram
+package spbpp {
+    class Main {
+        - scanner: Scanner
+        - userInteraction: UserInteraction
+        - loggedInUser: String
+        - selectedYear: String
+        - selectedMonth: String
+        + userManager: UserManager
+        + budgetManager: BudgetManager
+        + expenseManager: ExpenseManager
+        + savingsManager: SavingsManager
+        + Main(UserManager, UserInteraction)
+        + main(String[]): void <<static>>
+        + login(): boolean <<static>>
+        + createAccount(): void <<static>>
+        + selectYearMonth(): void <<static>>
+        - isValidYear(String): boolean <<static>>
+        - isValidMonth(String): boolean <<static>>
+        + dashboard(): void <<static>>
+        + addExpense(): void <<static>>
+        + editExpense(): void <<static>>
+        + viewExpenses(): void <<static>>
+        + setBudget(): void <<static>>
+        + setSavingsGoal(): void <<static>>
+        - getMonthName(String): String <<static>>
+        + setUserManager(UserManager): void
+    }
 
-class User {
-  - String username
-  - String password
-  + boolean authenticate(String, String)
-  + void createAccount(String, String)
+    class ExpenseManager {
+        - EXPENSE_FILE_PREFIX: String <<static>>
+        - AMOUNT_INDEX: int <<static>>
+        - CATEGORY_INDEX: int <<static>>
+        + addExpense(String, String, String): void
+        + editExpense(String, String, List<String>, int, String): void
+        + loadExpenses(String, String): List<String>
+        - saveToFile(String, String, boolean): void
+        + calculateTotalExpenses(String, String): int
+        + getTotalExpenses(String, String): int
+    }
+
+    class DateUtils {
+        + parseDate(String): LocalDate <<static>>
+    }
+
+    class BudgetManager {
+        - BUDGET_FILE_PREFIX: String <<static>>
+        + monthlyBudget: int
+        + loadBudget(String, String): OptionalInt
+        + setBudget(String, String, int): void
+        - saveToFile(String, String): void
+        + getMonthlyBudget(): int
+    }
+
+    class SavingsManager {
+        - SAVINGS_FILE_PREFIX: String <<static>>
+        - savingsGoals: Map<String, Double>
+        + loadSavingsGoal(String, String): OptionalInt
+        + getSavingsGoal(String, String): double
+        + setSavingsGoal(String, String, double): void
+        - saveToFile(String, String): void
+    }
+
+    class UserInteraction {
+        - scanner: Scanner
+        + UserInteraction()
+        + UserInteraction(Scanner)
+        + getUserChoice(String): int
+        + getUserInput(String): String
+        + getDoubleInput(String): double
+        + getIntInput(String): int
+        + print(String): void
+        + close(): void
+    }
+
+    class UserManager {
+        - USERS_FILE: String <<static>>
+        + authenticate(String, String): boolean
+        + createAccount(String, String): void
+    }
+
+    Main *-- UserInteraction : composition
+    Main --> UserManager : association
+    Main --> BudgetManager : association
+    Main --> ExpenseManager : association
+    Main --> SavingsManager : association
+    ExpenseManager --> DateUtils : association
+    BudgetManager --> DateUtils : association
+    SavingsManager --> DateUtils : association
 }
-
-class BudgetManager {
-  - int monthlyBudget
-  + void loadBudget(String, String)
-  + void setBudget(String, String, int)
-}
-
-class ExpenseManager {
-  - List<ExpenseEntry> expenses
-  + void addExpense(ExpenseEntry)
-  + void editExpense(int, ExpenseEntry)
-  + List<ExpenseEntry> getExpenses()
-  + int calculateTotalExpenses()
-}
-
-class SavingsManager {
-  - int savingsGoal
-  + void loadSavingsGoal(String, String)
-  + void setSavingsGoal(int)
-}
-
-class ExpenseEntry {
-  - LocalDate date
-  - int amount
-  - String category
-  + String toString()
-}
-
-class DateUtils {
-  + LocalDate <<static>> parseDate(String)
-}
-
-class SmartBudgetPlanner {
-  - User currentUser
-  - BudgetManager budgetManager
-  - ExpenseManager expenseManager
-  - SavingsManager savingsManager
-  + void run()
-  + void showDashboard()
-}
-
-
-SmartBudgetPlanner *-- "1" User : contains
-SmartBudgetPlanner *-- "1" BudgetManager : contains
-SmartBudgetPlanner *-- "1" ExpenseManager : contains
-SmartBudgetPlanner *-- "1" SavingsManager : contains
-ExpenseManager o-- "*" ExpenseEntry : aggregates
-ExpenseManager ..> DateUtils : uses
-SmartBudgetPlanner ..> DateUtils : uses
-
-note top of ExpenseEntry
-  Inner class of ExpenseManager
-  Represents individual expense entries
-  with date, amount, and category
-end note
-
-note right of SavingsManager
-  Optional component - user might
-  not set savings goals
-end note
-
 @enduml
